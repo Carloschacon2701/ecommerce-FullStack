@@ -5,4 +5,8 @@ const uploadArchive = async (req: Request, res: Response) => {
   res.json({ message: "File uploaded successfully" });
 };
 
-export { uploadArchive };
+const getArchive = async (_req: Request, res: Response) => {
+  res.json({ message: "File downloaded successfully" });
+};
+
+export { uploadArchive, getArchive };

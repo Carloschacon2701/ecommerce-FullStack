@@ -1,6 +1,8 @@
 import express, { Express } from "express";
 import cors from "cors";
 import upload from "../Routes/upload";
+import products from "../Routes/products";
+import { connectToDatabase } from "../Database/config";
 
 export class Server {
   app: Express;
@@ -12,10 +14,16 @@ export class Server {
     this.port = Number(process.env.PORT) || 3000;
     this.paths = {
       upload: "/api/upload",
+      products: "/api/products",
     };
 
     this.middlewares();
     this.routes();
+    this.databaseConnection();
+  }
+
+  async databaseConnection() {
+    await connectToDatabase();
   }
 
   middlewares() {
@@ -25,6 +33,7 @@ export class Server {
 
   routes() {
     this.app.use(this.paths.upload, upload);
+    this.app.use(this.paths.products, products);
   }
 
   listen() {
