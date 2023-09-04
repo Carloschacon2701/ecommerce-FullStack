@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import cors from "cors";
-import upload from "../Routes/upload";
-import products from "../Routes/products";
+import { upload, products, users } from "../Routes/index";
+
 import { connectToDatabase } from "../Database/config";
 
 export class Server {
@@ -15,6 +15,7 @@ export class Server {
     this.paths = {
       upload: "/api/upload",
       products: "/api/products",
+      users: "/api/users",
     };
 
     this.middlewares();
@@ -34,6 +35,7 @@ export class Server {
   routes() {
     this.app.use(this.paths.upload, upload);
     this.app.use(this.paths.products, products);
+    this.app.use(this.paths.users, users);
   }
 
   listen() {
