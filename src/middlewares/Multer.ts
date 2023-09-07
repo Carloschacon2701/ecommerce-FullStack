@@ -1,13 +1,15 @@
 import { NextFunction, Response, Request } from "express";
 import multer from "multer";
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, __dirname + "/uploads/");
+    cb(null, __dirname + "./../uploads");
   },
 
   filename: (_req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, uuidv4() + path.extname(file.originalname));
   },
 });
 
@@ -17,8 +19,9 @@ const uploadMulter = multer({
     fileSize: 1024 * 1024 * 1,
   },
 
-  fileFilter: (_req, file, cb) => {
+  fileFilter: (req, file, cb) => {
     if (file.mimetype === "image/png" || file.mimetype === "image/jpeg") {
+      req.body.filePath = file.path;
       cb(null, true);
     } else {
       cb(new Error(`File format ${file.mimetype} not supported`));
