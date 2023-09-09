@@ -7,6 +7,7 @@ export const ValidateJWT = (
   next: NextFunction
 ) => {
   const { authorization } = req.headers;
+  console.log(authorization);
 
   if (!authorization) {
     return res.status(401).json({
@@ -17,14 +18,19 @@ export const ValidateJWT = (
   try {
     const checkToken = jwt.verify(authorization, process.env.SECRET_KEY || "");
     const { uid, name } = checkToken as JwtPayload;
+    console.log(checkToken);
 
-    req.body.user.uid = uid;
-    req.body.user.name = name;
+    console.log("hola");
+
+    req.body.uid = uid;
+    req.body.name = name;
 
     return next();
   } catch (error) {
+    console.log(error);
     return res.status(401).json({
       msg: "Invalid token",
+      error: error,
     });
   }
 };

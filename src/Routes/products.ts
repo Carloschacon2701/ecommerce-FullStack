@@ -1,10 +1,16 @@
 import { Router } from "express";
 import { createNewProduct } from "../Controllers/products";
 import { ValidateJWT } from "../middlewares/ValidateJWT";
+import { check } from "express-validator";
+import { checkValidatorErrors } from "../middlewares/checkValidatorErrors";
 
 const router = Router();
 
-router.post("/new-product", [ValidateJWT], createNewProduct);
+router.post(
+  "/new-product",
+  [ValidateJWT, check("name", "name is not provided"), checkValidatorErrors],
+  createNewProduct
+);
 
 export default router;
 

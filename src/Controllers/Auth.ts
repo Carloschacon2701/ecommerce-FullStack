@@ -74,4 +74,6 @@ const register = async (req: Request, res: Response) => {
   }
 };
 
+const logOut = async (req: Request, res: Response) => {};
+
 export { login, register };
