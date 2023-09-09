@@ -15,6 +15,7 @@ export const ValidateJWT = (
   }
 
   try {
+    console.log(authorization);
     const checkToken = jwt.verify(authorization, process.env.SECRET_KEY || "");
     const { uid, userName, role } = checkToken as JwtPayload;
 

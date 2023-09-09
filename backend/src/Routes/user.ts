@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { checkValidatorErrors } from "../middlewares/checkValidatorErrors";
-import { createUser } from "../Controllers/users";
+import { createUser, getUserPhoto, uploadPhoto } from "../Controllers/users";
+import { ValidateJWT } from "../middlewares/ValidateJWT";
 
 const router = Router();
 
@@ -15,5 +16,9 @@ router.post(
   ],
   createUser
 );
+
+router.post("/upload-photo", [ValidateJWT], uploadPhoto);
+
+router.get("/get-photo", [ValidateJWT], getUserPhoto);
 
 export default router;

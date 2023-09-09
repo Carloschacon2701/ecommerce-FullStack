@@ -1,4 +1,4 @@
-import { NextFunction, Response, Request } from "express";
+// import { NextFunction, Response, Request } from "express";
 import multer from "multer";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
@@ -13,15 +13,14 @@ const storage = multer.diskStorage({
   },
 });
 
-const uploadMulter = multer({
+export const uploadMulter = multer({
   storage: storage,
   limits: {
     fileSize: 1024 * 1024 * 1,
   },
 
-  fileFilter: (req, file, cb) => {
+  fileFilter: (_req, file, cb) => {
     if (file.mimetype === "image/png" || file.mimetype === "image/jpeg") {
-      req.body.filePath = file.path;
       cb(null, true);
     } else {
       cb(new Error(`File format ${file.mimetype} not supported`));
@@ -29,16 +28,16 @@ const uploadMulter = multer({
   },
 }).single("archive");
 
-export const uploadMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  uploadMulter(req, res, (err) => {
-    if (err) {
-      return res.status(400).json({ message: err.message });
-    }
+// export const uploadMiddleware = (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   uploadMulter(req, res, (err) => {
+//     if (err) {
+//       return res.status(400).json({ message: err.message });
+//     }
 
-    return next();
-  });
-};
+//     return next();
+//   });
+// };
