@@ -1,5 +1,4 @@
 const { subtle } = globalThis.crypto;
-
 function btoa(str: string) {
   return Buffer.from(str, "binary").toString("base64");
 }

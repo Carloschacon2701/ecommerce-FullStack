@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const CategorySchema = new Schema({
   name: {
@@ -13,3 +13,5 @@ CategorySchema.methods.toJSON = function () {
   category.cid = _id;
   return category;
 };
+
+export const CategoryModel = model("Category", CategorySchema);

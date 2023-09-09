@@ -29,7 +29,7 @@ const login = async (req: Request, res: Response) => {
       });
     }
 
-    const jwt = await generateJWT(user.id, user.name);
+    const jwt = await generateJWT(user.id, user.name, user.role);
 
     return res.json({
       msg: "Login successfully",
@@ -73,7 +73,5 @@ const register = async (req: Request, res: Response) => {
     });
   }
 };
-
-const logOut = async (req: Request, res: Response) => {};
 
 export { login, register };

@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { createNewProduct } from "../Controllers/products";
+import { createNewCategory, createNewProduct } from "../Controllers/products";
 import { ValidateJWT } from "../middlewares/ValidateJWT";
 import { check } from "express-validator";
 import { checkValidatorErrors } from "../middlewares/checkValidatorErrors";
+import { ValidateRole } from "../middlewares/ValidateRole";
 
 const router = Router();
 
@@ -10,6 +11,17 @@ router.post(
   "/new-product",
   [ValidateJWT, check("name", "name is not provided"), checkValidatorErrors],
   createNewProduct
+);
+
+router.post(
+  "/new-category",
+  [
+    ValidateJWT,
+    ValidateRole(["ADMIN_ROLE"]),
+    check("name", "name is not provided").notEmpty(),
+    checkValidatorErrors,
+  ],
+  createNewCategory
 );
 
 export default router;

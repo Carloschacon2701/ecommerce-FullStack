@@ -7,7 +7,6 @@ export const ValidateJWT = (
   next: NextFunction
 ) => {
   const { authorization } = req.headers;
-  console.log(authorization);
 
   if (!authorization) {
     return res.status(401).json({
@@ -17,13 +16,11 @@ export const ValidateJWT = (
 
   try {
     const checkToken = jwt.verify(authorization, process.env.SECRET_KEY || "");
-    const { uid, name } = checkToken as JwtPayload;
-    console.log(checkToken);
-
-    console.log("hola");
+    const { uid, userName, role } = checkToken as JwtPayload;
 
     req.body.uid = uid;
-    req.body.name = name;
+    req.body.userName = userName;
+    req.body.role = role;
 
     return next();
   } catch (error) {
