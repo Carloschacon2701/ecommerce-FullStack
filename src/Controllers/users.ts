@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { hashImportantInfo } from "../Helpers/HashImportantInfo";
 import { UserModel } from "../Models/Users";
 
-export const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response) => {
   const { active, role, ...rest } = req.body;
 
   const hashedPassword = await hashImportantInfo(rest.password);
@@ -18,3 +18,5 @@ export const createUser = async (req: Request, res: Response) => {
     user,
   });
 };
+
+export { createUser };

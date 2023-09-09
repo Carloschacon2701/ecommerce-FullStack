@@ -20,6 +20,11 @@ const ProductSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+    required: true,
+  },
 });
 
 ProductSchema.methods.toJSON = function () {
